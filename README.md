@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--
  * @功能描述: 
  * @作者: 高云蛟
@@ -14,3 +15,7 @@
 > 5、安装loader， ts-loader
 
 > 6、单元测试npx ts-jest config:init
+=======
+# pdfNomalTest
+pdf开发过程中本地开发遇到的例子（比如文本高亮，freetext,annotation,undo,redo等操作）
+>>>>>>> 576d3783bce8fb2d157d2517417bf0ad81cbf21f
