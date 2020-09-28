@@ -1,5 +1,5 @@
 import HightlightText from './highlightText/index';
-const msg = '我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家我爱我家';
+const msg = '111111111112222222222222223333333333333333';
 
 window.onload = () => {
     let t = new HightlightText(document.getElementById('app'));
