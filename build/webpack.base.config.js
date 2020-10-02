@@ -35,5 +35,6 @@ module.exports = {
         splitChunks: {
             chunks: 'all'
         }
-    }
+    },
+    devtool: 'source-map'
 }

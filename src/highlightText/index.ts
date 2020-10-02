@@ -7,13 +7,16 @@ export default class HighlightText{
         this.$ui = $ui;
     }
     createText(message:string){
-        let text = document.createElement('div');
-        let txt = document.createTextNode(message);
-        text.appendChild(txt)
+        let text = document.createElement('span');
+        let text1 = document.createElement('span');
+        text.innerHTML = message
+        text1.innerHTML = message
         this.$ui.appendChild(text)
+        this.$ui.appendChild(text1)
     }
     paint(index:number){
         if(window.getSelection().type == 'None') return;
+        console.log(window.getSelection());
         const range = window.getSelection().getRangeAt(index);
         const start = { 
             node: range.startContainer, 
