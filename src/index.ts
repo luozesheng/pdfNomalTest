@@ -1,4 +1,4 @@
-import HightlightText from './highlightText/index';
+// import HightlightText from './highlightText/index';
 import Events from './Events/index';
 const msg = '123456789';
 

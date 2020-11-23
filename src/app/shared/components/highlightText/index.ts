@@ -16,7 +16,7 @@ export default class HighlightText{
     }
     paint(index:number){
         if(window.getSelection().type == 'None') return;
-        console.log(window.getSelection());
+        // console.log(window.getSelection());
         const range = window.getSelection().getRangeAt(index);
         const start = { 
             node: range.startContainer, 
