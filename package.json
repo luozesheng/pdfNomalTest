@@ -22,7 +22,8 @@
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.1",
+    "zone.js": "^0.11.3"
   },
   "dependencies": {
     "koa": "^2.13.0"
