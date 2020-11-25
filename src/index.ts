@@ -1,10 +1,11 @@
 // import HightlightText from './highlightText/index';
 import Events from './Events/index';
 import ZoneTest from './app/core/base/zoneState';
+import RxUnitTest from './app/core/base/rxJSTest';
 const msg = '123456789';
 
 let zoneTest:ZoneTest = new ZoneTest();
-
+let rxTest: RxUnitTest = new RxUnitTest();
 window.onload = () => {
     // let events = new Events();
     // events.on( "maria", (goodName, goodPrice) => {
@@ -23,4 +24,6 @@ window.onload = () => {
     // }
     // Zone单元测试
     zoneTest.main();
+    // RxJS单元测试
+    rxTest.main();
 }

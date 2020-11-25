@@ -1,6 +1,8 @@
 import 'zone.js';
 export default class ZoneTest{
-	public name:string = "";
+	public name: string;
+	public domString: string;
+	
 	baseTest(){
 		let logZone = Zone.current.fork({
 			name: "logZone",
@@ -53,6 +55,6 @@ export default class ZoneTest{
 	}
 	// 执行类函数入口
 	main(){
-		this.testScheduleLog()
+		// this.testScheduleLog()
 	}
 }
