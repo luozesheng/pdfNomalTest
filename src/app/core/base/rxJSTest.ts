@@ -177,6 +177,11 @@ export default class RxUnitTest {
 			sub2.unsubscribe();
 		}, 200);
 	}
+	/**
+	 * BehaviorSubject
+	 * subject的子集
+	 * 同理，意味着创建的subscribtion有一个共同的父级
+	*/
 	test9() { 
 		let bhs = new Rx.BehaviorSubject(0);
 		bhs.subscribe({
