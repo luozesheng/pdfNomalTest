@@ -1,7 +1,19 @@
 
-import { map, filter, scan } from "Rxjs/operators";
+import {
+	map,
+	filter,
+	scan,
+	switchMap,
+	shareReplay,
+	tap,
+	pluck,
+	take,
+	mergeMap
+} from "rxjs/operators";
+import { interval } from 'rxjs/observable/interval';
 // const Rx = require('rxjs/Rx');
 import * as Rx from 'rxjs/Rx';
+import { createPublicKey } from "crypto";
 export default class RxUnitTest {
 	public testArray: Array<number> = [];
 	private domString: string;
@@ -194,7 +206,116 @@ export default class RxUnitTest {
 		})
 		bhs.next(200)
 	}
+	test10() { 
+		let source = Rx.Observable.timer(0, 3000);
+		// source.subscribe(x => console.log('subscribe A: ', x));
+		// source.subscribe(x => console.log('subscribe B: ', x));
+	}
+	/**
+	 * 多个选项卡间切换时，使用switchMap可以取消订阅，订阅最新的subscription
+	 * 避免多个subscription并发请求，消耗多余的资源
+	 * */ 
+	test11() { 
+		let domstr = `<div style="display:flex;flex:1;justify-content:space-between;">
+			<div class="tabs" style="width:60px;height:30px;background-color:rgba(151,151,151,0.6);">选项卡1</div>
+			<div class="tabs" style="width:60px;height:30px;background-color:rgba(151,151,151,0.6);">选项卡2</div>
+			<div class="tabs" style="width:60px;height:30px;background-color:rgba(151,151,151,0.6);">选项卡3</div>
+		</div>`;
+		document.getElementById("app").innerHTML = domstr;
+		let tabs = document.getElementsByClassName("tabs");
+		let clicks = Rx.Observable.fromEvent(tabs, "click");
+		let source = clicks.switchMap((event) => Rx.Observable.interval(1000));
+		source.subscribe(x => console.log(x));
+	}
+	test12() { 
+		let data = [{
+			username: {
+				name: "maria"
+			},
+			address: "福州市闽侯县荆溪镇古山洲"
+		},{
+			username: {
+				name: "lisa"
+			},
+			address: "福州市鼓楼区软件园F区"
+			}];
+		let source = Rx.Observable.from(data).pluck("username", "name");
+		source.subscribe({
+			next: x => console.log(x)
+		});
+	}
+	/**
+	 * test13,test14都是对shareReply,replySubject实例描述
+	 * 
+	 * */ 
+	test13() { 
+		const routed = new Rx.Subject<{ data: any, url: string }>();
+		let lastUrl = routed.pipe(
+			tap(_ => console.log("begin")),
+			pluck('url'),
+			shareReplay() //所有的subscription都能共享数据
+		);
+		// 其实订阅者必须
+		lastUrl.subscribe(console.log);
+		routed.next({ data: { name: "maria" }, url: "www.baidu.com" });
+		lastUrl.subscribe(console.log);
+	}
+	test14() { 
+		const subject = new Rx.Subject<{ data: any, url: string }>();
+		const shareWidthReplay = new Rx.ReplaySubject();
+		let last = subject.pipe(
+			pluck("url")
+		);
+		last.subscribe(x => shareWidthReplay.next(x));
+		shareWidthReplay.subscribe(console.log);
+		subject.next({
+			data: {
+				name:"maria"
+			},
+			url: "www.baidu.com/cn"
+		});
+		subject.next({
+			data: {
+				name:"lisa"
+			},
+			url: "11111111111111111"
+		});
+
+	}
+	test15() { 
+		// let str = `<input type="text" id="inputID" />`;
+		// document.getElementById("app").innerHTML = str;
+		// let id = document.getElementById("inputID");
+		// let change = Rx.Observable.fromEvent(id, "change");
+		// let source = change.switchMap((event) => { 
+		// 	console.log(event.target)
+		// 	return Rx.Observable.interval(2000);
+		// });
+		// source.subscribe();
+		// var clicks = Rx.Observable.fromEvent(document, 'click');
+		// var tagNames = clicks.pluck('target', 'style');
+		// tagNames.subscribe(x => console.log(x));
+	}
+	test16() { 
+		let data = [{
+			username: {
+				name: "maria"
+			},
+			address: "福州市闽侯县荆溪镇古山洲"
+		},{
+			username: {
+				name: "lisa"
+			},
+			address: "福州市鼓楼区软件园F区"
+			}];
+		let source = Rx.Observable.from(data);
+		let last = source.pipe(
+			take(1),
+			mergeMap(_=> data)
+		);
+		last.subscribe(console.log);
+	}
 	public main(): void {
-		this.test9();	
+		this.test16();	
 	}
 }
