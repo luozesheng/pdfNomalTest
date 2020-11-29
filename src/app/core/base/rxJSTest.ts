@@ -315,7 +315,14 @@ export default class RxUnitTest {
 		);
 		last.subscribe(console.log);
 	}
+	test17() { 
+		let d = document.getElementById('RxID');
+		let clicks = Rx.Observable.fromEvent(d, 'click');
+		// let last = clicks.mapTo("hello world!");
+		let last = Rx.Observable.interval(1000).takeUntil(clicks);
+		last.subscribe(console.log);
+	}
 	public main(): void {
-		this.test16();	
+		this.test17();	
 	}
 }
